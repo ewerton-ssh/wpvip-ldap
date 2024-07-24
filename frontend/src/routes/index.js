@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard/";
 import TicketResponsiveContainer from "../pages/TicketResponsiveContainer";
 import Signup from "../pages/Signup/";
 import Login from "../pages/Login/";
+import LoginLDAP from "../pages/LoginLDAP/";
 import Connections from "../pages/Connections/";
 import SettingsCustom from "../pages/SettingsCustom/";
 import Financeiro from "../pages/Financeiro/";
@@ -54,6 +55,7 @@ const Routes = () => {
         <TicketsContextProvider>
           <Switch>
             <Route exact path="/login" component={Login} />
+            <Route exact path="/loginldap" component={LoginLDAP} />
             <Route exact path="/signup" component={Signup} />
 			<Route exact path="/forgetpsw" component={ForgetPassword} /> 
             {/* <Route exact path="/create-company" component={Companies} /> */}

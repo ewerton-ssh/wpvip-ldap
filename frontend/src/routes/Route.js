@@ -11,7 +11,7 @@ const Route = ({ component: Component, isPrivate = false, ...rest }) => {
 		return (
 			<>
 				{loading && <BackdropLoading />}
-				<Redirect to={{ pathname: "/login", state: { from: rest.location } }} />
+				<Redirect to={{ pathname: "/loginldap", state: { from: rest.location } }} />
 			</>
 		);
 	}

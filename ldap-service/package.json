@@ -1,0 +1,17 @@
+{
+  "name": "wpvip-ldapservice",
+  "version": "1.0.0",
+  "description": "wpvip active directory service",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ewerton-ssh",
+  "license": "ISC",
+  "dependencies": {
+    "activedirectory2": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
