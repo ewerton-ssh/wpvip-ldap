@@ -6,33 +6,31 @@ const ActiveDirectory = require('activedirectory2');
 
 // .env config
 require('dotenv').config();
-
-const app = express();
-
 const http_port = process.env.HTTP_PORT;
 const https_port = process.env.HTTPS_PORT;
+const domain = process.env.CERT_DOMAIN;
 
-const domain = process.env.CERT_DOMAIN
-
-//active directory
-const config = {
-    url: `ldap://${process.env.LDAP_ADRESS}`,
-    baseDN: process.env.BASE_DN,
-    username: process.env.ADMIN_USER + process.env.LDAP_DOMAIN,
-    password: process.env.ADMIN_PASSWORD
-};
+const app = express();
 
 app.use(express.json());
 
 app.use(cors({
     origin: [
-        'http://localhost:3000'
+        process.env.FRONT_CORS_DOMAIN
     ]
 }));
 
-const ad = new ActiveDirectory(config);
-
 app.post('/loginldap', async (request, response) => {
+    //active directory
+    const config = {
+        url: `ldap://${process.env.LDAP_ADRESS}`,
+        baseDN: process.env.BASE_DN,
+        username: process.env.ADMIN_USER + process.env.LDAP_DOMAIN,
+        password: process.env.ADMIN_PASSWORD
+    };
+
+    const ad = new ActiveDirectory(config);
+
     const username = request.body.email;
     const password = request.body.password;
 
@@ -80,10 +78,9 @@ app.listen(http_port, () => {
 });
 
 // https server
-/*
+
 https.createServer({
     key: fs.readFileSync(`/etc/letsencrypt/live/${domain}/privkey.pem`),
     cert: fs.readFileSync(`/etc/letsencrypt/live/${domain}/cert.pem`),
     ca: fs.readFileSync(`/etc/letsencrypt/live/${domain}/chain.pem`)
-}, app).listen(https_port, ()=> console.log(`🚀 API HTTPS iniciada na porta ${https_port}!`));
-*/
+}, app).listen(https_port, () => console.log(`🚀 API HTTPS iniciada na porta ${https_port}!`));
