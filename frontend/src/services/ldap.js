@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiLDAP = axios.create({
-	baseURL: "https://localhost:3070"
+	baseURL: process.env.LDAP_SERVICE_API
 });
 
 export default apiLDAP;

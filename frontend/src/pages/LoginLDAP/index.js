@@ -113,7 +113,8 @@ async function handleLoginLDAP(userData){
 			name: response.data.name,
 			email: response.data.email,
 			password: response.data.password,
-			profile:"user"
+			profile:"user",
+			companyId: response.data.companyId
 		}
 
 		if(!newUserLdapHeader.name || !newUserLdapHeader.email || !newUserLdapHeader.password){

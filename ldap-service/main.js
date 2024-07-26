@@ -59,7 +59,8 @@ app.post('/loginldap', async (request, response) => {
                         name: user.cn,
                         username: user.userPrincipalName,
                         email: user.mail,
-                        password: `${user.sAMAccountName}@${user.whenCreated}`
+                        password: `${user.sAMAccountName}@${user.whenCreated}`,
+                        companyId: process.env.COMPANY_ID
                     }
                     console.log(userData);
                     response.json(userData);
