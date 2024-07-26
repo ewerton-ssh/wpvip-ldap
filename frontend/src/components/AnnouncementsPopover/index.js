@@ -157,7 +157,7 @@ export default function AnnouncementsPopover() {
   }, [searchParam, pageNumber]);
 
   useEffect(() => {
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
     const socket = socketManager.getSocket(companyId);
     
     if (!socket) {

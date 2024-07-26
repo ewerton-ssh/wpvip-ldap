@@ -29,7 +29,7 @@ const QrcodeModal = ({ open, onClose, whatsAppId }) => {
 
   useEffect(() => {
     if (!whatsAppId) return;
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
     const socket = socketManager.getSocket(companyId);
 
     socket.on(`company-${companyId}-whatsappSession`, (data) => {

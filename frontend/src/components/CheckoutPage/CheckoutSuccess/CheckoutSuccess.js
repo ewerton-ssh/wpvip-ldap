@@ -20,7 +20,7 @@ function CheckoutSuccess(props) {
   const socketManager = useContext(SocketContext);
 
   useEffect(() => {
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
     const socket = socketManager.getSocket(companyId);
     
     socket.on(`company-${companyId}-payment`, (data) => {

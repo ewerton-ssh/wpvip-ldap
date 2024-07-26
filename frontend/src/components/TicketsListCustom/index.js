@@ -201,7 +201,7 @@ const TicketsListCustom = (props) => {
   }, [tickets, status, searchParam, queues, profile]);
 
   useEffect(() => {
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
     const socket = socketManager.getSocket(companyId);
 
     const shouldUpdateTicket = (ticket) =>

@@ -106,7 +106,7 @@ export default function TicketMessagesDialog({ open, handleClose, ticketId }) {
   }, [ticketId, user, history, open]);
 
   useEffect(() => {
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
     let socket = null;
 
     if (open) {

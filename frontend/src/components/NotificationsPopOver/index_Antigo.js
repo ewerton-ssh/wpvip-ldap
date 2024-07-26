@@ -95,7 +95,7 @@ const NotificationsPopOver = ({ volume }) => {
   }, [ticketIdUrl]);
 
   useEffect(() => {
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
     const socket = socketConnection({ companyId });
     if (!socket) {
       return () => {}; 

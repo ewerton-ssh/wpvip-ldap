@@ -207,7 +207,7 @@ function Chat(props) {
   }, [currentChat]);
 
   useEffect(() => {
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
     const socket = socketManager.getSocket(companyId);
 
     socket.on(`company-${companyId}-chat-user-${user.id}`, (data) => {

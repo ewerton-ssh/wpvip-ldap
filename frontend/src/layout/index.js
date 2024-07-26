@@ -259,7 +259,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
   }, [drawerOpen]);
 
   useEffect(() => {
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
     const userId = localStorage.getItem("userId");
 
     const socket = socketManager.getSocket(companyId);

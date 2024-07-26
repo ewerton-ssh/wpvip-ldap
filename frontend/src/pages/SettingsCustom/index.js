@@ -73,7 +73,7 @@ const SettingsCustom = () => {
     async function findData() {
       setLoading(true);
       try {
-        const companyId = localStorage.getItem("companyId");
+        const companyId = sessionStorage.getItem("companyId");
         const company = await find(companyId);
         const settingList = await getAllSettings();
         setCompany(company);
@@ -104,7 +104,7 @@ const SettingsCustom = () => {
       async function findData() {
         setLoading(true);
         try {
-          const companyId = localStorage.getItem("companyId");
+          const companyId = sessionStorage.getItem("companyId");
           const company = await find(companyId);
           const settingList = await getAllSettings();
           setCompany(company);

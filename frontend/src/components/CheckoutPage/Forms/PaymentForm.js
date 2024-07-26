@@ -113,7 +113,7 @@ export default function Pricing(props) {
   const [storagePlans, setStoragePlans] = React.useState([]);
   const [customValuePlans, setCustomValuePlans] = React.useState(49.00);
   const [loading, setLoading] = React.useState(false);
-  const companyId = localStorage.getItem("companyId");
+  const companyId = sessionStorage.getItem("companyId");
 
   useEffect(() => {
     async function fetchData() {

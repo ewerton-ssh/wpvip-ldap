@@ -98,7 +98,7 @@ const CampaignReport = () => {
   }, [delivered, validContacts]);
 
   useEffect(() => {
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
     const socket = socketManager.getSocket(companyId);
 
     socket.on(`company-${companyId}-campaign`, (data) => {

@@ -166,7 +166,7 @@ const Dashboard = () => {
   }, [])
   //let companyDueDate = localStorage.getItem("companyDueDate");
   //const companyDueDate = localStorage.getItem("companyDueDate").toString();
-  const companyId = localStorage.getItem("companyId");
+  const companyId = sessionStorage.getItem("companyId");
   const loadCompanies = async () => {
     setLoading(true);
     try {

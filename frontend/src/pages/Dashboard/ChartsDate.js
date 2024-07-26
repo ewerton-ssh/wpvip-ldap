@@ -63,7 +63,7 @@ export const ChartsDate = () => {
     const [finalDate, setFinalDate] = useState(new Date());
     const [ticketsData, setTicketsData] = useState({ data: [], count: 0 });
 
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
 
     useEffect(() => {
         handleGetTicketsInformation();

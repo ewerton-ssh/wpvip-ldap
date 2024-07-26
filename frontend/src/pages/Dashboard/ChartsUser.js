@@ -75,7 +75,7 @@ export const ChatsUser = () => {
     const [finalDate, setFinalDate] = useState(new Date());
     const [ticketsData, setTicketsData] = useState({ data: [] });
 
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
 
     useEffect(() => {
         handleGetTicketsInformation();
