@@ -161,7 +161,7 @@ Entre em contato com o Suporte para mais informações! `);
       localStorage.removeItem("cshow");
       api.defaults.headers.Authorization = undefined;
       setLoading(false);
-      history.push("/login");
+      history.push("/loginldap");
     } catch (err) {
       toastError(err);
       setLoading(false);

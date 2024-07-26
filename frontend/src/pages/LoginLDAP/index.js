@@ -18,15 +18,16 @@ import { nomeEmpresa } from "../../../package.json";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import logo from "../../assets/logo.png";
 import { toast } from "react-toastify";
+import LoginLdapBackground from "../../assets/login_background.png"
 
 
 
 
 const Copyright = () => {
 	return (
-		<Typography variant="body2" color="primary" align="center">
+		<Typography variant="body2" color="black" align="center">
 			{"Copyright "}
-			<Link color="primary" href="#">
+			<Link color="#000000" href="#">
 				{nomeEmpresa} - v {versionSystem}
 			</Link>{" "}
 			{new Date().getFullYear()}
@@ -40,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 		width: "100vw",
 		height: "100vh",
 		//background: "linear-gradient(to right, #76EE00 , #76EE00 , #458B00)",
-		backgroundImage: "url(https://i.imgur.com/CGby9tN.png)",
+		backgroundImage: `url(${LoginLdapBackground})`,
 		backgroundRepeat: "no-repeat",
 		backgroundSize: "100% 100%",
 		backgroundPosition: "center",
@@ -75,17 +76,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 //create whaticket user based ldap user
-async function handleSaveLdapUser(userData, handleLogin){
-	try{
+async function handleSaveLdapUser(userData, handleLogin) {
+	try {
 		await api.post("/users", userData);
-	} catch (error){
+	} catch (error) {
 
 		const userExists = error.response.data.error;
 
-		if(userExists === 'An user with this email already exists.'){
+		if (userExists === 'An user with this email already exists.') {
 			// Login whaticket
-			const ldapUser = { 
-				email: userData.email, 
+			const ldapUser = {
+				email: userData.email,
 				password: userData.password
 			};
 
@@ -95,7 +96,7 @@ async function handleSaveLdapUser(userData, handleLogin){
 }
 
 //verify AD login
-async function handleLoginLDAP(userData, handleLogin){
+async function handleLoginLDAP(userData, handleLogin) {
 	try {
 		const response = await apiLDAP.post('/loginldap', userData);
 
@@ -103,11 +104,11 @@ async function handleLoginLDAP(userData, handleLogin){
 			name: response.data.name,
 			email: response.data.email,
 			password: response.data.password,
-			profile:"user",
+			profile: "user",
 			companyId: response.data.companyId
 		}
 
-		if(!newUserLdapHeader.name || !newUserLdapHeader.email || !newUserLdapHeader.password){
+		if (!newUserLdapHeader.name || !newUserLdapHeader.email || !newUserLdapHeader.password) {
 			toast.error('Dados de domínio incompletos!')
 		}
 
@@ -115,10 +116,10 @@ async function handleLoginLDAP(userData, handleLogin){
 
 	} catch (error) {
 		const errorStatus = error.response.status;
-		if(errorStatus === 401) {
+		if (errorStatus === 401) {
 			toast.error('Usuário ou senha incorretos!')
 		}
-		
+
 	};
 };
 
@@ -144,11 +145,11 @@ const LoginLDAP = () => {
 				<CssBaseline />
 				<div className={classes.paper}>
 					<div>
-						<img style={{ margin: "0 auto", width: "100%" }} src={logo} alt="Whats" />
+						<h1 style={{fontSize: "30px"}}>Whatsapp - Grupo PHD</h1>
 					</div>
-					{/*<Typography component="h1" variant="h5">
-					{i18n.t("login.title")}
-				</Typography>*/}
+					{<Typography component="h1" variant="h5">
+						{i18n.t("Login de Domínio")}
+					</Typography>}
 					<form className={classes.form} noValidate onSubmit={handlSubmit}>
 						<TextField
 							variant="outlined"
@@ -179,7 +180,9 @@ const LoginLDAP = () => {
 
 						<Grid container justify="flex-end">
 							<Grid item xs={6} style={{ textAlign: "right" }}>
-									Esqueceu sua senha? Problema seu!
+								<Link component={RouterLink} to="/login" variant="body2">
+									Painel do administrador
+								</Link>
 							</Grid>
 						</Grid>
 
@@ -192,7 +195,7 @@ const LoginLDAP = () => {
 						>
 							{i18n.t("login.buttons.submit")}
 						</Button>
-						
+
 					</form>
 
 				</div>
