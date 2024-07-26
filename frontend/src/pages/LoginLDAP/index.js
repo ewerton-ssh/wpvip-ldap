@@ -78,7 +78,19 @@ const useStyles = makeStyles(theme => ({
 //create whaticket user based ldap user
 async function handleSaveLdapUser(userData, handleLogin) {
 	try {
-		await api.post("/users", userData);
+
+		const response = await api.post("/users", userData);
+
+		if(response.status === 200){
+			// Login whaticket
+			const ldapUser = {
+				email: userData.email,
+				password: userData.password
+			};
+
+			handleLogin(ldapUser);
+		}
+
 	} catch (error) {
 
 		const userExists = error.response.data.error;
