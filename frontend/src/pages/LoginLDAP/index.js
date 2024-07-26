@@ -15,7 +15,7 @@ import Container from "@material-ui/core/Container";
 import { versionSystem } from "../../../package.json";
 import { i18n } from "../../translate/i18n";
 import { nomeEmpresa } from "../../../package.json";
-//import { AuthContext } from "../../context/Auth/AuthContext";
+import { AuthContext } from "../../context/Auth/AuthContext";
 import logo from "../../assets/logo.png";
 import { toast } from "react-toastify";
 
@@ -74,38 +74,28 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-//gravar usuario novo
-
-/*
-
-const handleSaveUser = async values => {
-	const userData = { ...values, whatsappId, queueIds: selectedQueueIds, allTicket: values.allTicket };
-	try {
-		if (userId) {
-			await api.put(`/users/${userId}`, userData);
-		} else {
-			await api.post("/users", userData);
-		}
-		toast.success(i18n.t("userModal.success"));
-	} catch (err) {
-		toastError(err);
-	}
-	handleClose();
-};
-
-*/
-
-async function handleSaveLdapUser(userData){
+//create whaticket user based ldap user
+async function handleSaveLdapUser(userData, handleLogin){
 	try{
-		await api.post("/users", userData)
+		await api.post("/users", userData);
 	} catch (error){
-		console.log(error);
+
+		const userExists = error.response.data.error;
+
+		if(userExists === 'An user with this email already exists.'){
+			// Login whaticket
+			const ldapUser = { 
+				email: userData.email, 
+				password: userData.password
+			};
+
+			handleLogin(ldapUser);
+		}
 	}
 }
 
-
-//verificar login no active directory
-async function handleLoginLDAP(userData){
+//verify AD login
+async function handleLoginLDAP(userData, handleLogin){
 	try {
 		const response = await apiLDAP.post('/loginldap', userData);
 
@@ -121,19 +111,15 @@ async function handleLoginLDAP(userData){
 			toast.error('Dados de domínio incompletos!')
 		}
 
-		console.log(newUserLdapHeader);
-
-		handleSaveLdapUser(newUserLdapHeader);
+		handleSaveLdapUser(newUserLdapHeader, handleLogin);
 
 	} catch (error) {
-		console.log(error.response.status);
 		const errorStatus = error.response.status;
 		if(errorStatus === 401) {
 			toast.error('Usuário ou senha incorretos!')
 		}
 		
 	};
-
 };
 
 const LoginLDAP = () => {
@@ -141,7 +127,7 @@ const LoginLDAP = () => {
 
 	const [user, setUser] = useState({ email: "", password: "" });
 
-	//const { handleLogin } = useContext(AuthContext);
+	const { handleLogin } = useContext(AuthContext);
 
 	const handleChangeInput = e => {
 		setUser({ ...user, [e.target.name]: e.target.value });
@@ -149,7 +135,7 @@ const LoginLDAP = () => {
 
 	const handlSubmit = e => {
 		e.preventDefault();
-		handleLoginLDAP(user);
+		handleLoginLDAP(user, handleLogin);
 	};
 
 	return (
