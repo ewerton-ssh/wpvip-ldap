@@ -17,7 +17,7 @@ const useAuth = () => {
 
   api.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       if (token) {
         config.headers["Authorization"] = `Bearer ${JSON.parse(token)}`;
         setIsAuth(true);
@@ -40,14 +40,14 @@ const useAuth = () => {
 
         const { data } = await api.post("/auth/refresh_token");
         if (data) {
-          localStorage.setItem("token", JSON.stringify(data.token));
+          sessionStorage.setItem("token", JSON.stringify(data.token));
           api.defaults.headers.Authorization = `Bearer ${data.token}`;
         }
         return api(originalRequest);
       }
       if (error?.response?.status === 401) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("companyId");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("companyId");
         api.defaults.headers.Authorization = undefined;
         setIsAuth(false);
       }
@@ -58,7 +58,7 @@ const useAuth = () => {
   const socketManager = useContext(SocketContext);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     (async () => {
       if (token) {
         try {
@@ -75,7 +75,7 @@ const useAuth = () => {
   }, []);
 
   useEffect(() => {
-    const companyId = localStorage.getItem("companyId");
+    const companyId = sessionStorage.getItem("companyId");
     if (companyId) {
    
       const socket = socketManager.getSocket(companyId);
@@ -107,7 +107,7 @@ const useAuth = () => {
           (s) => s.key === "campaignsEnabled"
         );
         if (setting && setting.value === "true") {
-          localStorage.setItem("cshow", null); //regra pra exibir campanhas
+          sessionStorage.setItem("cshow", null); //regra pra exibir campanhas
         }
       }
 
@@ -122,10 +122,10 @@ const useAuth = () => {
       var dias = moment.duration(diff).asDays();
 
       if (before === true) {
-        localStorage.setItem("token", JSON.stringify(data.token));
-        localStorage.setItem("companyId", companyId);
-        localStorage.setItem("userId", id);
-        localStorage.setItem("companyDueDate", vencimento);
+        sessionStorage.setItem("token", JSON.stringify(data.token));
+        sessionStorage.setItem("companyId", companyId);
+        sessionStorage.setItem("userId", id);
+        sessionStorage.setItem("companyDueDate", vencimento);
         api.defaults.headers.Authorization = `Bearer ${data.token}`;
         setUser(data.user);
         setIsAuth(true);
@@ -155,10 +155,10 @@ Entre em contato com o Suporte para mais informações! `);
       await api.delete("/auth/logout");
       setIsAuth(false);
       setUser({});
-      localStorage.removeItem("token");
-      localStorage.removeItem("companyId");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("cshow");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("companyId");
+      sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("cshow");
       api.defaults.headers.Authorization = undefined;
       setLoading(false);
       history.push("/loginldap");
