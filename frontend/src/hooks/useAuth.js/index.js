@@ -59,20 +59,33 @@ const useAuth = () => {
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
-    (async () => {
-      if (token) {
-        try {
-          const { data } = await api.post("/auth/refresh_token");
-          api.defaults.headers.Authorization = `Bearer ${data.token}`;
-          setIsAuth(true);
-          setUser(data.user);
-        } catch (err) {
-          toastError(err);
-        }
+  
+    const refreshToken = async () => {
+      try {
+        const { data } = await api.post("/auth/refresh_token");
+        api.defaults.headers.Authorization = `Bearer ${data.token}`;
+        sessionStorage.setItem("token", JSON.stringify(data.token));
+        setIsAuth(true);
+        setUser(data.user);
+      } catch (err) {
+        console.error("Error refreshing token:", err);
+        toastError(err);
+        setIsAuth(false);
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("companyId");
       }
+    };
+  
+    if (token) {
+      refreshToken();
+      const intervalId = setInterval(refreshToken, 30000);
+  
+      return () => clearInterval(intervalId);
+    } else {
       setLoading(false);
-    })();
+    }
   }, []);
+  
 
   useEffect(() => {
     const companyId = sessionStorage.getItem("companyId");
