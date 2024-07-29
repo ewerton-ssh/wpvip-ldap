@@ -190,7 +190,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
   const { colorMode } = useContext(ColorModeContext);
   const greaterThenSm = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const [volume, setVolume] = useState(sessionStorage.getItem("volume") || 1);
+  const [volume, setVolume] = useState(localStorage.getItem("volume") || 1);
 
   const { dateToClient } = useDate();
 

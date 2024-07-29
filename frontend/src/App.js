@@ -17,7 +17,7 @@ const App = () => {
     const [locale, setLocale] = useState();
 
     const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-    const preferredTheme = window.sessionStorage.getItem("preferredTheme");
+    const preferredTheme = window.localStorage.getItem("preferredTheme");
     const [mode, setMode] = useState(preferredTheme ? preferredTheme : prefersDarkMode ? "dark" : "light");
 
     const colorMode = React.useMemo(
@@ -85,7 +85,7 @@ const App = () => {
     );
 
     useEffect(() => {
-        const i18nlocale = sessionStorage.getItem("i18nextLng");
+        const i18nlocale = localStorage.getItem("i18nextLng");
         const browserLocale =
             i18nlocale.substring(0, 2) + i18nlocale.substring(3, 5);
 
@@ -95,7 +95,7 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        window.sessionStorage.setItem("preferredTheme", mode);
+        window.localStorage.setItem("preferredTheme", mode);
     }, [mode]);
 
 

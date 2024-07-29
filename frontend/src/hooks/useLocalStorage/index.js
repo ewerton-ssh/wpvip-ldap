@@ -4,7 +4,7 @@ import toastError from "../../errors/toastError";
 export function useLocalStorage(key, initialValue) {
 	const [storedValue, setStoredValue] = useState(() => {
 		try {
-			const item = sessionStorage.getItem(key);
+			const item = localStorage.getItem(key);
 			return item ? JSON.parse(item) : initialValue;
 		} catch (error) {
 			toastError(error);
@@ -19,7 +19,7 @@ export function useLocalStorage(key, initialValue) {
 
 			setStoredValue(valueToStore);
 
-			sessionStorage.setItem(key, JSON.stringify(valueToStore));
+			localStorage.setItem(key, JSON.stringify(valueToStore));
 		} catch (error) {
 			toastError(error);
 		}
