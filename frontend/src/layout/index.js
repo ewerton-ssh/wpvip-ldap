@@ -313,7 +313,11 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
   const handleRefreshPage = () => {
     window.location.reload(false);
-  }
+  };
+
+  setTimeout(() => {
+    window.location.reload(false);
+  }, 60000);
 
   const handleMenuItemClick = () => {
     const { innerWidth: width } = window;
