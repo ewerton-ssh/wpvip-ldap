@@ -190,7 +190,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
   const { colorMode } = useContext(ColorModeContext);
   const greaterThenSm = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const [volume, setVolume] = useState(localStorage.getItem("volume") || 1);
+  const [volume, setVolume] = useState(sessionStorage.getItem("volume") || 1);
 
   const { dateToClient } = useDate();
 
@@ -260,7 +260,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
   useEffect(() => {
     const companyId = sessionStorage.getItem("companyId");
-    const userId = localStorage.getItem("userId");
+    const userId = sessionStorage.getItem("userId");
 
     const socket = socketManager.getSocket(companyId);
 
@@ -268,7 +268,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
       if (data.user.id === +userId) {
         toastError("Sua conta foi acessada em outro computador.");
         setTimeout(() => {
-          localStorage.clear();
+          sessionStorage.clear();
           window.location.reload();
         }, 1000);
       }

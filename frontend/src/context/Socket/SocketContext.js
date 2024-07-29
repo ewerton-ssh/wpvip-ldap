@@ -77,8 +77,8 @@ const SocketManager = {
 
   getSocket: function(companyId) {
     let userId = null;
-    if (localStorage.getItem("userId")) {
-      userId = localStorage.getItem("userId");
+    if (sessionStorage.getItem("userId")) {
+      userId = sessionStorage.getItem("userId");
     }
 
     if (!companyId && !this.currentSocket) {
@@ -97,7 +97,7 @@ const SocketManager = {
         this.currentSocket = null;
       }
 
-      let token = JSON.parse(localStorage.getItem("token"));
+      let token = JSON.parse(sessionStorage.getItem("token"));
       if (!token) {
         return new DummySocket();
       }
@@ -122,7 +122,7 @@ const SocketManager = {
 
       this.currentSocket.io.on("reconnect_attempt", () => {
         this.currentSocket.io.opts.query.r = 1;
-        token = JSON.parse(localStorage.getItem("token"));
+        token = JSON.parse(sessionStorage.getItem("token"));
         if ( isExpired(token) ) {
           console.warn("Refreshing");
           window.location.reload();
@@ -136,7 +136,7 @@ const SocketManager = {
         console.warn(`socket disconnected because: ${reason}`);
         if (reason.startsWith("io server disconnect")) {
           console.warn("tryng to reconnect", this.currentSocket);
-          token = JSON.parse(localStorage.getItem("token"));
+          token = JSON.parse(sessionStorage.getItem("token"));
           
           if ( isExpired(token) ) {
             console.warn("Expired token - refreshing");

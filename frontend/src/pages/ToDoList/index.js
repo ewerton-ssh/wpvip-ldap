@@ -46,14 +46,14 @@ const ToDoList = () => {
   const [editIndex, setEditIndex] = useState(-1);
 
   useEffect(() => {
-    const savedTasks = localStorage.getItem('tasks');
+    const savedTasks = sessionStorage.getItem('tasks');
     if (savedTasks) {
       setTasks(JSON.parse(savedTasks));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    sessionStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
   const handleTaskChange = (event) => {

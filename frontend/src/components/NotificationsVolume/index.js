@@ -50,7 +50,7 @@ const NotificationsVolume = ({ volume, setVolume }) => {
 
     const handleVolumeChange = (value) => {
         setVolume(value);
-        localStorage.setItem("volume", value);
+        sessionStorage.setItem("volume", value);
     };
 
     return (

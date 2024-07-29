@@ -239,7 +239,7 @@ const MainListItems = (props) => {
   }, [chats, user.id]);
 
   useEffect(() => {
-    if (localStorage.getItem("cshow")) {
+    if (sessionStorage.getItem("cshow")) {
       setShowCampaigns(true);
     }
   }, []);

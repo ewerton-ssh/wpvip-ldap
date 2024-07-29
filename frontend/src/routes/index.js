@@ -43,7 +43,7 @@ const Routes = () => {
   const [showCampaigns, setShowCampaigns] = useState(false);
 
   useEffect(() => {
-    const cshow = localStorage.getItem("cshow");
+    const cshow = sessionStorage.getItem("cshow");
     if (cshow !== undefined) {
       setShowCampaigns(true);
     }
