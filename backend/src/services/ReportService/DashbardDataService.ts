@@ -115,7 +115,7 @@ export default async function DashboardDataService(
 
   if (_.has(params, "days")) {
     where += ` and tt."queuedAt" >= (now() - '? days'::interval)`;
-    replacements.push(parseInt(`${params.days}`.replace(/\D/g, ""), 10));
+    replacements.push(parseInt(`${params.days}`.replace(/[^0-9-]/g, ""), 10));
   }
 
   if (_.has(params, "date_from")) {

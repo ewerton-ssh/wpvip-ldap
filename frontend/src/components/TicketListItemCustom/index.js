@@ -281,7 +281,7 @@ const useStyles = makeStyles((theme) => ({
                    
             }
             
-            if (settingIndex[0].value === "enabled" && !ticket.isGroup) {
+            if (settingIndex[0].value === "enabled") {
                 handleSendMessage(ticket.id);
                 
             }
@@ -416,7 +416,7 @@ const useStyles = makeStyles((theme) => ({
                 color="textPrimary"
               >
                 {ticket.contact.name}
-                {profile === "admin" && (
+                {(
                   <Tooltip title="Espiar Conversa">
                     <VisibilityIcon
                       onClick={() => setOpenTicketMessageDialog(true)}
